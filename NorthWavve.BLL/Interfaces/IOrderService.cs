@@ -15,7 +15,7 @@ namespace NorthWave.BLL.Interfaces
 
         Task<OrderDto> CreateAsync(CreateOrderDto dto);
 
-        Task UpdateStatusAsync(int id, UpdateOrderStatusDto dto);
+        Task<OrderDto> UpdateStatusAsync(int id, UpdateOrderStatusDto dto);
 
         Task DeleteAsync(int id);
     }

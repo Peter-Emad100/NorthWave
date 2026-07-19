@@ -11,7 +11,7 @@ namespace NorthWave.Models.Entities
     {
         public int Id { get; set; }
 
-        public  required int OrderId { get; set; }
+        public int OrderId { get; set; }
 
         public Order Order { get; set; } = null!;
 
