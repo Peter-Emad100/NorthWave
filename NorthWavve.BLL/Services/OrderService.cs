@@ -111,25 +111,6 @@ namespace NorthWave.BLL.Services
 
             await _unitOfWork.SaveChangesAsync();
         }
-
-        private decimal GetDiscount(CustomerType customerType)
-        {
-            return customerType switch
-            {
-                CustomerType.VIP => 0.20m,
-                CustomerType.Wholesale => 0.15m,
-                CustomerType.Employee => 0.50m,
-                _ => 0m
-            };
-        }
-        private decimal CalculateTotal(Order order)
-        {
-            decimal total = order.OrderItems.Sum(i => i.UnitPrice * i.Quantity);
-
-            decimal discount = GetDiscount(order.Customer.CustomerType);
-
-            return total * (1 - discount);
-        }
         private OrderDto MapOrderToDto(Order order)
         {
             decimal subTotal = order.OrderItems.Sum(i => i.UnitPrice * i.Quantity);

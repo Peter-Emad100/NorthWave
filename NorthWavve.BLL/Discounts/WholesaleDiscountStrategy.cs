@@ -9,7 +9,7 @@ namespace NorthWave.BLL.Discounts
 {
     public class WholesaleDiscountStrategy
     {
-        public CustomerType CustomerType => CustomerType.VIP;
+        public CustomerType CustomerType => CustomerType.Wholesale;
 
         public decimal ApplyDiscount(decimal total)
         {
