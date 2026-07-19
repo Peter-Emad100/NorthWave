@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthWave.Models.Enums
+namespace NorthWave.DAL.Interfaces
 {
-    public enum CustomerType
+    public interface IUnitOfWork
     {
-        Regular,
-        VIP,
-        Wholesale,
-        Employee
+        Task<int> SaveChangesAsync();
     }
 }

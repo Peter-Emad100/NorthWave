@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace NorthWave.BLL.DTOs.Order
 {
-    internal class CreateOrderDto
+    public class CreateOrderDto
     {
+        public int CustomerId { get; set; }
+
+        public List<CreateOrderItemDto> Items { get; set; } = new();
     }
 }

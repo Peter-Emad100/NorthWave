@@ -1,4 +1,4 @@
-﻿using NorthWave.Models.Entities;
+﻿using NorthWave.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

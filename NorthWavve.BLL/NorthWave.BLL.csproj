@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Order\" />
-    <Folder Include="DTOs\Product\" />
+    <ProjectReference Include="..\NorthWave.DAL\NorthWave.DAL.csproj" />
+    <ProjectReference Include="..\NorthWave.Models\NorthWave.Models.csproj" />
   </ItemGroup>
 
 </Project>

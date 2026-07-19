@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace NorthWave.BLL.DTOs.Product
 {
-    internal class UpdateProductDto
+    public class UpdateProductDto
     {
+        public required string Name { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
