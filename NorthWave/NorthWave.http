@@ -1,0 +1,6 @@
+@NorthWave_HostAddress = http://localhost:5156
+
+GET {{NorthWave_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
