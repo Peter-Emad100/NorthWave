@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NorthWave.BLL.Discounts
 {
-    public class RegularDiscountStrategy
+    public class RegularDiscountStrategy:IDiscountStrategy
     {
         public CustomerType CustomerType => CustomerType.Regular;
 
