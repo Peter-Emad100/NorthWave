@@ -21,6 +21,7 @@ namespace NorthWave.BLL.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEnumerable<IDiscountStrategy> _discountStrategies;
         private readonly ILogger<OrderService> _logger;
+        private readonly IEmailService _emailService;
 
         public OrderService(
             IOrderRepository orderRepository,
@@ -28,7 +29,8 @@ namespace NorthWave.BLL.Services
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
             IEnumerable<IDiscountStrategy> discountStrategies,
-            ILogger<OrderService> logger
+            ILogger<OrderService> logger,
+            IEmailService emailService
             )
         {
             _orderRepository = orderRepository;
@@ -37,6 +39,7 @@ namespace NorthWave.BLL.Services
             _unitOfWork = unitOfWork;
             _discountStrategies = discountStrategies;
             _logger = logger;
+            _emailService = emailService;
         }
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
@@ -88,6 +91,8 @@ namespace NorthWave.BLL.Services
 
             await _unitOfWork.SaveChangesAsync();
             _logger.LogInformation("Order {OrderId} created successfully",order.Id);
+            OrderDto orderDto = MapOrderToDto(order);
+            await _emailService.SendOrderConfirmationAsync(orderDto);
 
             return MapOrderToDto(order);
         }

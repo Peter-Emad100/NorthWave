@@ -13,7 +13,7 @@ namespace NorthWave.BLL.Discounts
 
         public decimal ApplyDiscount(decimal total)
         {
-            return total * 0.8m;
+            return total * 0.85m;
         }
     }
 }

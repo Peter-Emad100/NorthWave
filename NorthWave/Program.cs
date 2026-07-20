@@ -37,6 +37,7 @@ namespace NorthWave
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddScoped<IDiscountStrategy, RegularDiscountStrategy>();
             builder.Services.AddScoped<IDiscountStrategy, VipDiscountStrategy>();
