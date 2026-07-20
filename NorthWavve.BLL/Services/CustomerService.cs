@@ -1,4 +1,5 @@
-﻿using NorthWave.BLL.DTOs.Customer;
+﻿using Microsoft.Extensions.Logging;
+using NorthWave.BLL.DTOs.Customer;
 using NorthWave.BLL.Interfaces;
 using NorthWave.DAL.Interfaces;
 using NorthWave.Models.Entities;
@@ -14,13 +15,15 @@ namespace NorthWave.BLL.Services
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<CustomerService> _logger;
 
         public CustomerService(
             ICustomerRepository customerRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, ILogger<CustomerService> logger)
         {
             _customerRepository = customerRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<CustomerDto>> GetAllAsync()
@@ -61,6 +64,7 @@ namespace NorthWave.BLL.Services
             await _customerRepository.AddAsync(customer);
 
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Customer {CustomerId} created",customer.Id);
             return new CustomerDto
             {
                 Id = customer.Id,
@@ -82,6 +86,7 @@ namespace NorthWave.BLL.Services
             await _customerRepository.UpdateAsync(customer);
 
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Customer {CustomerId} updated", customer.Id);
         }
 
         public async Task DeleteAsync(int id)
@@ -94,6 +99,7 @@ namespace NorthWave.BLL.Services
             await _customerRepository.DeleteAsync(customer);
 
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Customer {CustomerId} deleted",id);
         }
     }
 }

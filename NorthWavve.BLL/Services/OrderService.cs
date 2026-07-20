@@ -1,4 +1,5 @@
-﻿using NorthWave.BLL.Discounts;
+﻿using Microsoft.Extensions.Logging;
+using NorthWave.BLL.Discounts;
 using NorthWave.BLL.DTOs.Order;
 using NorthWave.BLL.Interfaces;
 using NorthWave.DAL.Interfaces;
@@ -19,19 +20,23 @@ namespace NorthWave.BLL.Services
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEnumerable<IDiscountStrategy> _discountStrategies;
+        private readonly ILogger<OrderService> _logger;
 
         public OrderService(
             IOrderRepository orderRepository,
             ICustomerRepository customerRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IEnumerable<IDiscountStrategy> discountStrategies)
+            IEnumerable<IDiscountStrategy> discountStrategies,
+            ILogger<OrderService> logger
+            )
         {
             _orderRepository = orderRepository;
             _customerRepository = customerRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
             _discountStrategies = discountStrategies;
+            _logger = logger;
         }
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
@@ -82,6 +87,7 @@ namespace NorthWave.BLL.Services
             await _orderRepository.AddAsync(order);
 
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Order {OrderId} created successfully",order.Id);
 
             return MapOrderToDto(order);
         }
@@ -97,6 +103,7 @@ namespace NorthWave.BLL.Services
             await _orderRepository.UpdateAsync(order);
 
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Order {OrderId} status changed to {Status}",order.Id,order.Status);
 
             return MapOrderToDto(order);
         }
@@ -110,6 +117,7 @@ namespace NorthWave.BLL.Services
             await _orderRepository.DeleteAsync(order);
 
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Order {OrderId} deleted",id);
         }
         private OrderDto MapOrderToDto(Order order)
         {
