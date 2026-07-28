@@ -14,6 +14,9 @@ namespace NorthWave.Models.Entities
         public required string Name { get; set; } = string.Empty;
         public required string Password { get; set; }
         public required string Email { get; set; }
+        public string? TwoFactorCode { get; set; }
+
+        public DateTime? TwoFactorExpiry { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public CustomerType CustomerType { get; set; }

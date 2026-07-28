@@ -30,5 +30,13 @@ namespace NorthWave.Controllers
             return Ok(result);
         }
 
+        [HttpPost("verify")]
+        public async Task<IActionResult> VerifyTwoFactor(VerifyTwoFactorDto dto)
+        {
+            var response = await _authService.VerifyTwoFactorAsync(dto);
+
+            return Ok(response);
+        }
+
     }
 }

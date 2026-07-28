@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NorthWave.BLL.Configurations;
 using NorthWave.BLL.Discounts;
 using NorthWave.BLL.Interfaces;
 using NorthWave.BLL.Services;
@@ -45,6 +46,8 @@ namespace NorthWave
             builder.Services.AddScoped<IDiscountStrategy, VipDiscountStrategy>();
             builder.Services.AddScoped<IDiscountStrategy, WholesaleDiscountStrategy>();
             builder.Services.AddScoped<IDiscountStrategy, EmployeeDiscountStrategy>();
+
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
             var app = builder.Build();
 

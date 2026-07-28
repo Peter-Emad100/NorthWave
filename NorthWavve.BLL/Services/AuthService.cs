@@ -2,12 +2,14 @@
 using NorthWave.BLL.DTOs.Auth;
 using NorthWave.BLL.DTOs.Customer;
 using NorthWave.BLL.Interfaces;
+using NorthWave.DAL;
 using NorthWave.DAL.Interfaces;
 using NorthWave.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,14 +21,16 @@ namespace NorthWave.BLL.Services
         private readonly IJwtService _jwtService;
         private readonly PasswordHasher<Customer> _passwordHasher;
         private readonly IUnitOfWork _unitOfWork;
-        public AuthService(ICustomerRepository customerRepository, IJwtService jwtService, IUnitOfWork unitOfWork)
+        private readonly IEmailService _emailService;
+        public AuthService(ICustomerRepository customerRepository, IJwtService jwtService, IUnitOfWork unitOfWork, IEmailService emailService)
         {
             _customerRepository = customerRepository;
             _jwtService = jwtService;
             _passwordHasher = new PasswordHasher<Customer>();
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
-        public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
+        public async Task<LoginResponseDto> LoginAsync(LoginDto loginDto)
         {
             var customer = await _customerRepository.GetByEmailAsync(loginDto.Email);
 
@@ -41,7 +45,7 @@ namespace NorthWave.BLL.Services
             if (result == PasswordVerificationResult.Failed)
                 throw new Exception("Invalid email or password.");
 
-            return new AuthResponseDto
+            /*return new AuthResponseDto
             {
                 Token = _jwtService.GenerateToken(customer),
 
@@ -52,6 +56,15 @@ namespace NorthWave.BLL.Services
                     Email = customer.Email,
                     CreatedAt = customer.CreatedAt
                 }
+            };*/
+            customer.TwoFactorCode = GenerateVerificationCode();
+            customer.TwoFactorExpiry = DateTime.UtcNow.AddMinutes(2);
+
+            await _unitOfWork.SaveChangesAsync();
+            await _emailService.SendEmailAsync(customer.Email,"NorthWave Verification Code",$"Your verification code is {customer.TwoFactorCode}");
+            return new LoginResponseDto
+            {
+                Message = "Verification code sent to your email."
             };
         }
         public async Task<AuthResponseDto> RegisterAsync(RegisterDto dto)
@@ -84,5 +97,45 @@ namespace NorthWave.BLL.Services
                 Token = _jwtService.GenerateToken(customer)
             };
         }
+        public async Task<AuthResponseDto> VerifyTwoFactorAsync(VerifyTwoFactorDto dto)
+        {
+            var customer = await _customerRepository.GetByEmailAsync(dto.Email);
+
+            if (customer == null)
+                throw new UnauthorizedAccessException("Invalid verification code.");
+
+            if (customer.TwoFactorCode != dto.Code)
+                throw new UnauthorizedAccessException("Invalid verification code.");
+
+            if (customer.TwoFactorExpiry == null ||
+                customer.TwoFactorExpiry < DateTime.UtcNow)
+                throw new UnauthorizedAccessException("Verification code has expired.");
+
+            
+            customer.TwoFactorCode = null;
+            customer.TwoFactorExpiry = null;
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return new AuthResponseDto
+            {
+                Token = _jwtService.GenerateToken(customer),
+
+                Customer = new CustomerDto
+                {
+                    Id = customer.Id,
+                    Name = customer.Name,
+                    Email = customer.Email,
+                    CreatedAt = customer.CreatedAt
+                }
+            };
+        }
+        private static string GenerateVerificationCode()
+        {
+            return RandomNumberGenerator
+                .GetInt32(100000, 1000000)
+                .ToString();
+        }
     }
+
 }
