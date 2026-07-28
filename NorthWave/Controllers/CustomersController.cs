@@ -33,7 +33,7 @@ namespace NorthWave.Controllers
             return Ok(customer);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Create(CreateCustomerDto dto)
         {
             var customer = await _customerService.CreateAsync(dto);
@@ -42,7 +42,7 @@ namespace NorthWave.Controllers
                 nameof(GetById),
                 new { id = customer.Id },
                 customer);
-        }
+        }*/
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UpdateCustomerDto dto)

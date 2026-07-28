@@ -50,5 +50,9 @@ namespace NorthWave.DAL.Repositories
         {
             return await _context.Customers.AnyAsync(c => c.Id == id);
         }
+        public async Task<Customer?> GetByEmailAsync(string email)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 }

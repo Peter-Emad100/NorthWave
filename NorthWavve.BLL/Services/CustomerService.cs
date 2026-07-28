@@ -34,7 +34,8 @@ namespace NorthWave.BLL.Services
             {
                 Id = c.Id,
                 Name = c.Name,
-                CustomerType = c.CustomerType
+                CustomerType = c.CustomerType,
+                Email = c.Email
             });
         }
 
@@ -49,16 +50,18 @@ namespace NorthWave.BLL.Services
             {
                 Id = customer.Id,
                 Name = customer.Name,
-                CustomerType = customer.CustomerType
+                CustomerType = customer.CustomerType,
+                Email = customer.Email
             };
         }
 
-        public async Task<CustomerDto> CreateAsync(CreateCustomerDto dto)
+        /*public async Task<CustomerDto> CreateAsync(CreateCustomerDto dto)
         {
             var customer = new Customer
             {
                 Name = dto.Name,
                 CustomerType = dto.CustomerType
+
             };
 
             await _customerRepository.AddAsync(customer);
@@ -71,7 +74,7 @@ namespace NorthWave.BLL.Services
                 Name = customer.Name,
                 CustomerType = customer.CustomerType
             };
-        }
+        }*/
 
         public async Task UpdateAsync(int id, UpdateCustomerDto dto)
         {

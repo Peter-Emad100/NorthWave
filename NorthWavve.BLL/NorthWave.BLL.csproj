@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NorthWave.DAL\NorthWave.DAL.csproj" />
     <ProjectReference Include="..\NorthWave.Models\NorthWave.Models.csproj" />
   </ItemGroup>

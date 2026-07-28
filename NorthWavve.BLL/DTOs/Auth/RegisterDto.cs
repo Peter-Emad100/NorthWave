@@ -5,19 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthWave.Models.Entities
+namespace NorthWave.BLL.DTOs.Auth
 {
-    public class Customer
+    public class RegisterDto
     {
-        public int Id { get; set; }
-
-        public required string Name { get; set; } = string.Empty;
+        public required string Name { get; set; }
         public required string Password { get; set; }
         public required string Email { get; set; }
-        public DateTime CreatedAt { get; set; }
 
         public CustomerType CustomerType { get; set; }
-
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

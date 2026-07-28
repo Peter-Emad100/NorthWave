@@ -40,6 +40,15 @@ namespace NorthWave.DAL
                 .WithMany(p => p.OrderItems)
                 .HasForeignKey(oi => oi.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Customer>()
+            .Property(c => c.Email)
+            .HasMaxLength(255)
+            .IsRequired();
+
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
         }
     }
 }

@@ -14,5 +14,8 @@ namespace NorthWave.BLL.DTOs.Customer
         public required string Name { get; set; }
 
         public CustomerType CustomerType { get; set; }
+
+        public required string Email { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

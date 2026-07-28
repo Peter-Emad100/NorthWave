@@ -38,6 +38,8 @@ namespace NorthWave
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IJwtService, JwtService>();
 
             builder.Services.AddScoped<IDiscountStrategy, RegularDiscountStrategy>();
             builder.Services.AddScoped<IDiscountStrategy, VipDiscountStrategy>();

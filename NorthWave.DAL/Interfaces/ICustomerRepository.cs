@@ -12,6 +12,7 @@ namespace NorthWave.DAL.Interfaces
         Task<IEnumerable<Customer>> GetAllAsync();
 
         Task<Customer?> GetByIdAsync(int id);
+        Task<Customer?> GetByEmailAsync(string email);
 
         Task AddAsync(Customer customer);
 

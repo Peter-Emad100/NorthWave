@@ -13,7 +13,7 @@ namespace NorthWave.BLL.Interfaces
 
         Task<CustomerDto?> GetByIdAsync(int id);
 
-        Task<CustomerDto> CreateAsync(CreateCustomerDto dto);
+        /*Task<CustomerDto> CreateAsync(CreateCustomerDto dto);*/
 
         Task UpdateAsync(int id, UpdateCustomerDto dto);
 
