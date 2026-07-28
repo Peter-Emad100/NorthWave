@@ -55,27 +55,6 @@ namespace NorthWave.BLL.Services
             };
         }
 
-        /*public async Task<CustomerDto> CreateAsync(CreateCustomerDto dto)
-        {
-            var customer = new Customer
-            {
-                Name = dto.Name,
-                CustomerType = dto.CustomerType
-
-            };
-
-            await _customerRepository.AddAsync(customer);
-
-            await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Customer {CustomerId} created",customer.Id);
-            return new CustomerDto
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                CustomerType = customer.CustomerType
-            };
-        }*/
-
         public async Task UpdateAsync(int id, UpdateCustomerDto dto)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
