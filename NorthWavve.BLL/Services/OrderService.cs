@@ -92,7 +92,7 @@ namespace NorthWave.BLL.Services
             await _unitOfWork.SaveChangesAsync();
             _logger.LogInformation("Order {OrderId} created successfully",order.Id);
             OrderDto orderDto = MapOrderToDto(order);
-            await _emailService.SendOrderConfirmationAsync(orderDto);
+            await _emailService.SendEmailAsync(customer.Email, "Order Confirmation", $"Your order {order.Id} has been created successfully. Total: {orderDto.Total:C}");
 
             return MapOrderToDto(order);
         }

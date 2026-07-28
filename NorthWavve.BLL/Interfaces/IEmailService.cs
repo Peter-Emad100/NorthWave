@@ -9,7 +9,6 @@ namespace NorthWave.BLL.Interfaces
 {
     public interface IEmailService
     {
-        Task SendOrderConfirmationAsync(OrderDto order);
         Task SendEmailAsync(string to, string subject, string body);
     }
 }

@@ -20,11 +20,6 @@ namespace NorthWave.BLL.Services
         {
             _settings = options.Value;
         }
-
-        public Task SendOrderConfirmationAsync(OrderDto dto)
-        {
-            return Task.CompletedTask;
-        }
         public async Task SendEmailAsync(string to, string subject, string body)
         {
             var email = new MimeMessage();
