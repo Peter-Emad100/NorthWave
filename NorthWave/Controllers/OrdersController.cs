@@ -18,6 +18,7 @@ namespace NorthWave.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetAll()
         {
             var orders = await _orderService.GetAllAsync();

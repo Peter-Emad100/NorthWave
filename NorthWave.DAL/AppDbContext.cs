@@ -18,6 +18,7 @@ namespace NorthWave.DAL
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +48,14 @@ namespace NorthWave.DAL
             .IsRequired();
 
             modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
+            modelBuilder.Entity<Admin>()
+            .Property(c => c.Email)
+            .HasMaxLength(255)
+            .IsRequired();
+
+            modelBuilder.Entity<Admin>()
                 .HasIndex(c => c.Email)
                 .IsUnique();
         }

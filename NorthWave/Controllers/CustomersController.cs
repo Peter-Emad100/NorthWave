@@ -18,6 +18,7 @@ namespace NorthWave.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var customers = await _customerService.GetAllAsync();

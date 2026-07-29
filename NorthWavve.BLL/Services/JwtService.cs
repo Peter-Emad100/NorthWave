@@ -27,7 +27,8 @@ namespace NorthWave.BLL.Services
                 new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
                 new Claim(ClaimTypes.Name, customer.Name),
                 new Claim(ClaimTypes.Email, customer.Email),
-                new Claim(ClaimTypes.Role, customer.CustomerType.ToString())
+                new Claim(ClaimTypes.Role, customer.CustomerType.ToString()),
+                new Claim(ClaimTypes.Role, customer.Role.ToString())
             };
             var Credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(issuer: _configuration["Jwt:Issuer"],
