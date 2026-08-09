@@ -1,17 +1,20 @@
 using Microsoft.EntityFrameworkCore;
-using NorthWave.BLL.Configurations;
-using NorthWave.BLL.Discounts;
-using NorthWave.BLL.Interfaces;
-using NorthWave.BLL.Services;
-using NorthWave.DAL;
-using NorthWave.DAL.Interfaces;
-using NorthWave.DAL.Repositories;
+
 using NorthWave.Middlewares;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NorthWave.Application.Interfaces.RepositoriesInterfaces;
+using NorthWave.Application.Interfaces.ServicesInterfaces;
+using NorthWave.Application.Services;
+using NorthWave.Infrastructure.Presistence;
+using NorthWave.Infrastructure.Repositories;
+using NorthWave.Infrastructure.Email;
+using NorthWave.Infrastructure.Identity;
+using NorthWave.Application.Interfaces;
 using System.Text;
+using NorthWave.Infrastructure;
 namespace NorthWave
 {
     public class Program
@@ -63,6 +66,7 @@ namespace NorthWave
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IPasswordHasher, PasswordHasherService>();
 
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IProductService, ProductService>();
@@ -71,10 +75,7 @@ namespace NorthWave
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IJwtService, JwtService>();
 
-            builder.Services.AddScoped<IDiscountStrategy, RegularDiscountStrategy>();
-            builder.Services.AddScoped<IDiscountStrategy, VipDiscountStrategy>();
-            builder.Services.AddScoped<IDiscountStrategy, WholesaleDiscountStrategy>();
-            builder.Services.AddScoped<IDiscountStrategy, EmployeeDiscountStrategy>();
+            builder.Services.AddInfrastructure();
 
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

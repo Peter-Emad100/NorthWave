@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NorthWave.BLL.DTOs.Customer;
-using NorthWave.BLL.Interfaces;    
+using NorthWave.Application.DTOs.Customer;
+using NorthWave.Application.Interfaces.ServicesInterfaces;    
 namespace NorthWave.Controllers
 {
     [Authorize]
